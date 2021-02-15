@@ -1,17 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import praw
 from tqdm import tqdm
 from datetime import datetime
 import pandas as pd
-
-
-# In[2]:
-
 
 #### Reddit login and API connection ####
 
@@ -31,10 +21,7 @@ reddit = praw.Reddit(
     username=username,
     password=password)
 
-
-# In[3]:
-
-
+# create a loop to scrape and store data from reddit continuously
 i = 0
 reddit_df = pd.DataFrame(columns=['Time & Date', 'URL', 'body'])
 reddit_df.to_csv('reddit_data.csv')
@@ -46,10 +33,3 @@ for comment in tqdm(reddit.subreddit("wallstreetbets").stream.comments()):
     else:
         reddit_df.loc[i] = [datetime.fromtimestamp(comment.created_utc),comment.permalink,comment.body]
     i+=1
-
-
-# In[ ]:
-
-
-
-
